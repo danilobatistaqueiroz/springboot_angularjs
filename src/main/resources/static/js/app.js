@@ -1,41 +1,56 @@
-var app = angular.module('MyApp',['ngRoute','ngResource']);
+var app = angular.module('ngapp',['ngRoute','ngResource']);
 
 app.config(['$routeProvider','$locationProvider', '$resourceProvider', 
 function($routeProvider, $locationProvider, $resource) {
     $routeProvider
     .when('/', {
-        templateUrl: 'templates/greeting.html',
+        templateUrl: 'greeting.html',
         controller: 'GreetingController'
     })
     .when('/about', {
-        templateUrl: 'templates/about.html',
+        templateUrl: 'about.html',
         controller: 'AboutController'
     })
     .when('/login', {
-        templateUrl: 'templates/login.html',
+        templateUrl: 'login.html',
         controller: 'LoginController'
     })
     .otherwise({
-        redirectTo: 'login'
+        redirectTo: 'about'
     });
-
-    angular.module('app.services').factory('Entry', function($resource) {
-        return $resource('/user/:userId'); // Note the full endpoint address
-      });
-
-    app.controller('AboutController', function($scope) {
-
-    });
-    app.controller('LoginController', function($scope, Entry) {
-        $scope.signIn = function() {
-            var User = Entry.get({userId:$scope.id});
-            var user = User.get({userId:123}, function() {
-              $scope.logado = user;
-            });
-        }
-    });
-    app.controller('GreetingController', function($scope) {
-        $scope.logado = new User(0, '');
-    });
-
 }]);
+
+app.factory("Users", function($resource) {
+    return $resource("/api/users/:id");
+});
+
+angular.module('app').factory('listUsers', function(){
+    var listU = {};
+    listU.list = [];
+    listU.add = function(usr){
+        listU.list.push({id: listU.list.length, text: usr});
+      };
+    return listU;
+});
+angular.module('app').controller('PostCtrl', function (messages){
+    var self = this;
+    self.addMessage = function(message){
+      messages.add(message);
+    };
+});
+
+app.controller('AboutController', function($scope, Users) {
+    Users.get({ id: 2 }, function(data) {
+        $scope.logado = data;
+      });
+});
+app.controller('LoginController', function($scope, Users) {
+    $scope.signIn = function() {
+        var user = Users.get({id:123}, function() {
+              $scope.logado = user;
+        });
+    }
+});
+app.controller('GreetingController', function($scope, Users) {
+    $scope.logado = {"id":"1", "name":"Danilo"};
+});
