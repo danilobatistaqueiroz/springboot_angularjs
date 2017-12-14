@@ -11,10 +11,6 @@ function($routeProvider, $locationProvider, $resource) {
         templateUrl: 'about.html',
         controller: 'AboutController'
     })
-    .when('/users', {
-        templateUrl: 'users.html',
-        controller: 'UsersController'
-    })
     .when('/login', {
         templateUrl: 'login.html',
         controller: 'LoginController'
@@ -56,9 +52,6 @@ app.controller('LoginController', function($scope, Users, listUsers) {
 });
 app.controller('GreetingController', function($scope, Users) {
 
-});
-app.controller('UsersController', function($scope, Users) {
-    
 });
 app.controller('MenuController', function($scope, listUsers){
     $scope.$watch(function () { return listUsers.get(); },

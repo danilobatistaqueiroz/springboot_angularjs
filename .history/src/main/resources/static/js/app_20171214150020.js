@@ -11,10 +11,6 @@ function($routeProvider, $locationProvider, $resource) {
         templateUrl: 'about.html',
         controller: 'AboutController'
     })
-    .when('/users', {
-        templateUrl: 'users.html',
-        controller: 'UsersController'
-    })
     .when('/login', {
         templateUrl: 'login.html',
         controller: 'LoginController'
@@ -28,6 +24,14 @@ app.factory("Users", function($resource) {
     return $resource("/api/users/:id");
 });
 
+//angular.module('app').factory('listUsers', function(){
+ //   var listU = {};
+ //   listU.list = [];
+//    listU.add = function(usr){
+//        listU.list.push({id: listU.list.length, text: usr});
+//    };
+ //   return listU;
+//});
 app.service('listUsers', function() {
     var lst = [];
     this.add = function (User) {
@@ -43,6 +47,7 @@ app.service('listUsers', function() {
 
 app.controller('AboutController', function($scope, Users, listUsers) {
     Users.get({ id: 2 }, function(data) {
+        $scope.logado = data;
         $scope.listUsers = listUsers;
       });
 });
@@ -51,22 +56,20 @@ app.controller('LoginController', function($scope, Users, listUsers) {
     $scope.signIn = function() {
         var user = Users.get({id:123}, function() {
             listUsers.add(user);
+            $scope.logado = user;
         });
     }
-});
-app.controller('GreetingController', function($scope, Users) {
-
-});
-app.controller('UsersController', function($scope, Users) {
-    
-});
-app.controller('MenuController', function($scope, listUsers){
-    $scope.$watch(function () { return listUsers.get(); },
-        function (value) {
-            $scope.users = value;
-        }
-    );
     $scope.logoff = function() {
         listUsers.reset();
     }
+});
+app.controller('GreetingController', function($scope, Users) {
+    $scope.logado = {"id":"1", "name":"Danilo"};
+});
+app.controller('MenuController', function($scope, listUsers){
+    $scope.$watch(function () { return listUsers.get(); },
+    function (value) {
+        $scope.users = value;
+    }
+    );
 });

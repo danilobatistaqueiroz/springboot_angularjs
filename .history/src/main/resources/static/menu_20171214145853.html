@@ -9,11 +9,11 @@
                 <li ng-show="users.length>0"><a href="#!users">Users</a></li>
                 <li><a href="#!about">About</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right" ng-show="users.length==0">
+            <ul class="nav navbar-nav navbar-right" ng-show="users.length>0">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 <li><a href="#" onclick="$('#btnLogin').click();"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right" ng-show="users.length>0">
+            <ul class="nav navbar-nav navbar-right" ng-show="users.length==0">
                 <li><a href="#" ng-click="logoff();"><span class="glyphicon glyphicon-log-out"></span> Logoff</a></li>
             </ul>
         </div>

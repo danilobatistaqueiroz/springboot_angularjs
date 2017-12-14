@@ -57,9 +57,6 @@ app.controller('LoginController', function($scope, Users, listUsers) {
 app.controller('GreetingController', function($scope, Users) {
 
 });
-app.controller('UsersController', function($scope, Users) {
-    
-});
 app.controller('MenuController', function($scope, listUsers){
     $scope.$watch(function () { return listUsers.get(); },
         function (value) {
