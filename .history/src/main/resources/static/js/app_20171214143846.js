@@ -60,7 +60,7 @@ app.controller('LoginController', function($scope, Users, listUsers) {
 app.controller('GreetingController', function($scope, Users) {
     $scope.logado = {"id":"1", "name":"Danilo"};
 });
-app.controller('MenuController', function($scope){
+app.controller('MenuController', function(){
     $scope.$watch(function () { return listUsers.get(); },
     function (value) {
         $scope.users = value;

@@ -24,6 +24,7 @@ app.factory("Users", function($resource) {
     return $resource("/api/users/:id");
 });
 
+
 //angular.module('app').factory('listUsers', function(){
  //   var listU = {};
  //   listU.list = [];
@@ -54,16 +55,10 @@ app.controller('LoginController', function($scope, Users, listUsers) {
         var user = Users.get({id:123}, function() {
             listUsers.add(user);
             $scope.logado = user;
+            $scope.listUsers = listUsers;
         });
     }
 });
 app.controller('GreetingController', function($scope, Users) {
     $scope.logado = {"id":"1", "name":"Danilo"};
-});
-app.controller('MenuController', function($scope){
-    $scope.$watch(function () { return listUsers.get(); },
-    function (value) {
-        $scope.users = value;
-    }
-    );
 });

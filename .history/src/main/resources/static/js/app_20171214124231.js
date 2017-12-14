@@ -24,6 +24,7 @@ app.factory("Users", function($resource) {
     return $resource("/api/users/:id");
 });
 
+
 //angular.module('app').factory('listUsers', function(){
  //   var listU = {};
  //   listU.list = [];
@@ -33,22 +34,17 @@ app.factory("Users", function($resource) {
  //   return listU;
 //});
 app.service('listUsers', function() {
-    var lst = [];
-    this.add = function (User) {
-        lst.push({id: lst.length, name: User.name});
-    }
-    this.get = function() {
-        return lst;
+    this.addUser = function (User) {
+        listUsers.push({id: listUsers.length, name: User.name});
     }
 });
 
-app.controller('AboutController', function($scope, Users, listUsers) {
+app.controller('AboutController', function($scope, Users) {
     Users.get({ id: 2 }, function(data) {
         $scope.logado = data;
-        $scope.listUsers = listUsers;
       });
 });
-app.controller('LoginController', function($scope, Users, listUsers) {
+app.controller('LoginController', function($scope, Users) {
     var self = this;
     $scope.signIn = function() {
         var user = Users.get({id:123}, function() {
@@ -59,11 +55,4 @@ app.controller('LoginController', function($scope, Users, listUsers) {
 });
 app.controller('GreetingController', function($scope, Users) {
     $scope.logado = {"id":"1", "name":"Danilo"};
-});
-app.controller('MenuController', function($scope){
-    $scope.$watch(function () { return listUsers.get(); },
-    function (value) {
-        $scope.users = value;
-    }
-    );
 });
